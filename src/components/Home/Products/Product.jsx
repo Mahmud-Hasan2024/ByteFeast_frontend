@@ -19,13 +19,13 @@ const Product = () => {
       .finally(() => setLoading(false));
   }, []);
   return (
-    <section className="mx-auto py-16 bg-base-300">
+    <section className="mx-auto py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex justify-between items-center px-4 md:px-8 mb-7">
           <h2 className="text-3xl md:text-4xl font-bold">Trending Products</h2>
           <a
             href="#"
-            className="btn btn-secondary px-6 py-6 rounded-full text-lg"
+            className="btn btn-primary px-6 py-6 rounded-full text-lg"
           >
             View All
           </a>
@@ -33,7 +33,7 @@ const Product = () => {
         {/* Spinner */}
         {isLoading && (
           <div className="flex justify-center items-center py-10">
-            <span className="loading loading-spinner loading-xl text-secondary"></span>
+            <span className="loading loading-spinner loading-xl text-primary"></span>
           </div>
         )}
         {error && <ErroAlert error={error} />}

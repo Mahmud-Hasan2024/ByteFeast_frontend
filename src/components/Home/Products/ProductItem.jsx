@@ -19,7 +19,7 @@ const ProductItem = ({ product }) => {
         <p>{product.description}</p>
         <div className="card-actions mt-1">
           
-          <button className="btn btn-secondary">Buy Now</button>
+          <button className="btn btn-primary">Buy Now</button>
         </div>
       </div>
     </div>
