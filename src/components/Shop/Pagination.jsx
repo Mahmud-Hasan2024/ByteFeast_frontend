@@ -6,7 +6,7 @@ const Pagination = ({ totalPages, currentPage, handlePageChange }) => {
           key={i}
           onClick={() => handlePageChange(i + 1)}
           className={`btn btn-sm mx-1 rounded-full ${
-            currentPage === i + 1 ? "btn-secondary text-base-100" : "btn-ghost"
+            currentPage === i + 1 ? "btn-primary text-base-100" : "btn-ghost"
           }`}
         >
           {i + 1}

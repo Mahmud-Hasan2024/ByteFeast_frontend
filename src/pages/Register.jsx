@@ -7,6 +7,7 @@ import { useState } from "react";
 const Register = () => {
   const { registerUser, errorMsg } = useAuthContext();
   const [successMsg, setSuccessMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -17,6 +18,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     delete data.confirm_password;
+    setLoading(true);
     try {
       const response = await registerUser(data);
       console.log(response);
@@ -26,6 +28,8 @@ const Register = () => {
       }
     } catch (error) {
       console.log("Registration failed", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,6 +63,7 @@ const Register = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
+            {/* First name */}
             <div className="form-control">
               <label className="label" htmlFor="first_name">
                 <span className="label-text">First Name</span>
@@ -79,6 +84,7 @@ const Register = () => {
               )}
             </div>
 
+            {/* Last name */}
             <div className="form-control">
               <label className="label" htmlFor="last_name">
                 <span className="label-text">Last Name</span>
@@ -99,6 +105,7 @@ const Register = () => {
               )}
             </div>
 
+            {/* Email */}
             <div className="form-control">
               <label className="label" htmlFor="email">
                 <span className="label-text">Email</span>
@@ -117,9 +124,9 @@ const Register = () => {
                   {errors.email.message}
                 </span>
               )}
-              {/* <p>Email: {watch("email")}</p> */}
             </div>
 
+            {/* Address */}
             <div className="form-control">
               <label className="label" htmlFor="address">
                 <span className="label-text">Address</span>
@@ -133,6 +140,7 @@ const Register = () => {
               />
             </div>
 
+            {/* Phone number */}
             <div className="form-control">
               <label className="label" htmlFor="phone_number">
                 <span className="label-text">Phone Number</span>
@@ -146,6 +154,7 @@ const Register = () => {
               />
             </div>
 
+            {/* Password */}
             <div className="form-control">
               <label className="label" htmlFor="password">
                 <span className="label-text">Password</span>
@@ -170,6 +179,7 @@ const Register = () => {
               )}
             </div>
 
+            {/* Confirm password */}
             <div className="form-control">
               <label className="label" htmlFor="confirmPassword">
                 <span className="label-text">Confirm Password</span>
@@ -192,7 +202,13 @@ const Register = () => {
               )}
             </div>
 
-            <button type="submit" className="btn btn-primary w-full"></button>
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={loading}
+            >
+              {loading ? "Registering..." : "Register"}
+            </button>
           </form>
 
           <div className="text-center mt-4">
