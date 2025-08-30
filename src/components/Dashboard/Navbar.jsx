@@ -1,4 +1,5 @@
 import { FiMenu, FiX } from "react-icons/fi";
+import { GiChefToque } from "react-icons/gi";
 import { Link } from "react-router";
 
 const Navbar = ({ sidebarOpen }) => {
@@ -14,7 +15,10 @@ const Navbar = ({ sidebarOpen }) => {
         </label>
       </div>
       <div className="flex-1">
-        <h2 className="text-lg font-semibold">Dashboard</h2>
+        <Link to="/" className="flex items-center gap-2 btn btn-ghost text-xl">
+          <GiChefToque size={30} className="text-amber-400" />
+          <span className="font-bold">ByteFeast</span>
+        </Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">

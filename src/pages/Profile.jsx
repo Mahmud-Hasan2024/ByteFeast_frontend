@@ -5,6 +5,7 @@ import ProfileButtons from "../components/Dashboard/Profile/ProfileButtons";
 import PasswordChangeForm from "../components/Dashboard/Profile/PasswordChangeForm";
 import useAuthContext from "../hooks/useAuthContext";
 import ErroAlert from "../components/ErroAlert";
+import { UserCog } from 'lucide-react';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +26,7 @@ const Profile = () => {
     defaultValues: {
       first_name: '',
       last_name: '',
-      email: '', // Ensure email is in defaultValues
+      email: '',
       address: '',
       phone_number: '',
       current_password: '',
@@ -44,7 +45,7 @@ const Profile = () => {
       reset({
         first_name: user.first_name || '', 
         last_name: user.last_name || '',
-        email: user.email || '', // Ensure email is included here
+        email: user.email || '',
         address: user.address || '',
         phone_number: user.phone_number || '',
       });
@@ -70,12 +71,10 @@ const Profile = () => {
     console.log("Profile Component: Form submitted with data:", data);
     try {
       // 1. Profile update
-      // IMPORTANT: Include all fields that your backend's UserSerializer might require for a PUT request,
-      // even if they are disabled in the frontend (like email).
       const profilePayload = {
         first_name: data.first_name,
         last_name: data.last_name,
-        email: data.email, // <--- THIS IS THE CRUCIAL ADDITION
+        email: data.email, 
         address: data.address,
         phone_number: data.phone_number,
       };
@@ -105,7 +104,7 @@ const Profile = () => {
 
   if (loadingAuth) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-base-300"> {/* Added bg-base-300 */}
         <span className="loading loading-spinner loading-lg text-primary"></span>
         <p className="ml-2 text-neutral-content">Loading profile data...</p>
       </div>
@@ -113,33 +112,38 @@ const Profile = () => {
   }
   
   return (
-    <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
-      <div className="card-body">
-        {errorMsg && <ErroAlert error={errorMsg} />}
-        <h2 className="card-title text-2xl mb-4 text-neutral">Profile Information</h2>
+    <div className="min-h-screen bg-base-300 py-10 flex items-center justify-center"> {/* Page background */}
+      <div className="card w-full max-w-3xl mx-auto bg-base-100 shadow-2xl rounded-xl border border-base-200"> {/* Enhanced card styling */}
+        <div className="card-body p-8"> {/* Increased padding */}
+          {errorMsg && <ErroAlert error={errorMsg} />}
+          <h2 className="card-title text-4xl font-extrabold text-white mb-6 flex items-center justify-center gap-3">
+            <UserCog size={36} className="text-primary"/> {/* Icon for title */}
+            Manage Your Profile
+          </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ProfileForm
-            register={register}
-            errors={errors}
-            isEditing={isEditing}
-          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"> {/* Increased form spacing */}
+            <ProfileForm
+              register={register}
+              errors={errors}
+              isEditing={isEditing}
+            />
 
-          <PasswordChangeForm
-            errors={errors}
-            register={register}
-            watch={watch}
-            isEditing={isEditing}
-            isPasswordSectionOpen={isPasswordSectionOpen}
-            setIsPasswordSectionOpen={setIsPasswordSectionOpen}
-          />
+            <PasswordChangeForm
+              errors={errors}
+              register={register}
+              watch={watch}
+              isEditing={isEditing}
+              isPasswordSectionOpen={isPasswordSectionOpen}
+              setIsPasswordSectionOpen={setIsPasswordSectionOpen}
+            />
 
-          <ProfileButtons
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            isSubmitting={isSubmitting}
-          />
-        </form>
+            <ProfileButtons
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              isSubmitting={isSubmitting}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

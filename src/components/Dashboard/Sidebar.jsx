@@ -7,6 +7,7 @@ import {
   FiTag,
   FiUsers,
 } from "react-icons/fi";
+import { GiChefToque } from "react-icons/gi";
 import { Link } from "react-router";
 
 const Sidebar = () => {
@@ -30,8 +31,13 @@ const Sidebar = () => {
       <aside className="menu bg-base-200 w-64 min-h-full p-4 text-base-content">
         {/* Sidebar header */}
         <div className="flex items-center gap-2 mb-6 px-2">
-          <FiShoppingCart className="h-6 w-6" />
-          <h1 className="text-xl font-bold">PhiMart</h1>
+          <Link
+            to="/"
+            className="flex items-center gap-2 btn btn-ghost text-xl"
+          >
+            <GiChefToque size={30} className="text-amber-400" />
+            <span className="font-bold">ByteFeast</span>
+          </Link>
         </div>
 
         {/* Sidebar menu */}
@@ -48,7 +54,7 @@ const Sidebar = () => {
 
         {/* Sidebar footer */}
         <div className="mt-auto pt-6 text-xs text-base-content/70">
-          © 2025 PhiMart Admin
+          © 2025 ByteFeast Admin
         </div>
       </aside>
     </div>
