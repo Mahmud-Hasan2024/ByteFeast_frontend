@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
+const ITEMS_PER_PAGE = 12; 
+
 const useFetchProduct = (
   currentPage,
   priceRange,
@@ -19,9 +21,8 @@ const useFetchProduct = (
       try {
         const response = await apiClient.get(url);
         const data = await response.data;
-
         setProducts(data.results);
-        setTotalPages(Math.ceil(data.count / data.results.length));
+        setTotalPages(Math.ceil(data.count / ITEMS_PER_PAGE));
       } catch (error) {
         console.log(error);
       } finally {
