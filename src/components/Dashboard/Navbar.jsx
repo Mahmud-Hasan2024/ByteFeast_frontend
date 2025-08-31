@@ -1,6 +1,6 @@
 import { FiMenu, FiX } from "react-icons/fi";
 import { GiChefToque } from "react-icons/gi";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = ({ sidebarOpen }) => {
   return (
@@ -35,10 +35,9 @@ const Navbar = ({ sidebarOpen }) => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link href="/profile" className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </Link>
+              <NavLink to="/dashboard/profile">
+                Profile <span className="badge">New</span>
+              </NavLink>
             </li>
             <li>
               <Link href="/settings">Settings</Link>

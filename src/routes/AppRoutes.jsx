@@ -10,6 +10,8 @@ import PrivateRoute from "../components/PrivateRoute";
 import ActivateAccount from "../components/Registration/ActivateAccount";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
+import Cart from "../pages/Cart";
+import ProductDetail from "../pages/ProductDetail";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="shop" element={<Shop />} />
+        <Route path="shop/:productId" element={<ProductDetail />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
@@ -34,6 +37,7 @@ const AppRoutes = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>
   );
