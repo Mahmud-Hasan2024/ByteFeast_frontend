@@ -19,7 +19,13 @@ const ProductDetail = () => {
     });
   }, [productId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner text-primary loading-lg"></span>
+      </div>
+    );
+  }
   if (!product) return <div>Product Not Found...</div>;
 
   return (

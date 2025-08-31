@@ -5,7 +5,7 @@ import useCartContext from "../hooks/useCartContext";
 import { FaArrowLeft } from "react-icons/fa";
 
 const Cart = () => {
-  const { cart, loading, updateCartItemQuantity, deleteCartItems } =
+  const { cart, cartId, loading, updateCartItemQuantity, deleteCartItems } =
     useCartContext();
 
   if (loading) {
@@ -30,7 +30,7 @@ const Cart = () => {
         </Link>
       </div>
 
-      <h1 className="text-3xl md:text-4xl font-bold mb-8">Shopping Cart</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-8">Food Cart</h1>
 
       {cartItems.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -43,7 +43,11 @@ const Cart = () => {
           </div>
 
           <div className="space-y-6">
-            <CartSummary totalPrice={totalPrice} itemCount={cartItems.length} />
+            <CartSummary
+              totalPrice={totalPrice}
+              itemCount={cartItems.length}
+              cartId={cartId}
+            />
           </div>
         </div>
       ) : (

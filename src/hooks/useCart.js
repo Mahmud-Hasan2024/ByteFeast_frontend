@@ -6,28 +6,32 @@ const useCart = () => {
     () => JSON.parse(localStorage.getItem("authTokens"))?.access
   );
   const [cart, setCart] = useState(null);
+  const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
   const [loading, setLoading] = useState(false);
 
   const getOrCreateCart = useCallback(async () => {
     setLoading(true);
-    let cartId = localStorage.getItem("cartId");
 
-    if (cartId) {
+    let currentCartId = localStorage.getItem("cartId");
+
+    if (currentCartId) {
       try {
-        const response = await authApiClient.get(`/carts/${cartId}/`);
+        const response = await authApiClient.get(`/carts/${currentCartId}/`);
         setCart(response.data);
+        setCartId(response.data.id);
         setLoading(false);
         return response.data;
       } catch {
         localStorage.removeItem("cartId");
-        cartId = null;
+        currentCartId = null;
       }
     }
 
-    if (!cartId) {
+    if (!currentCartId) {
       try {
         const response = await authApiClient.post("/carts/");
         setCart(response.data);
+        setCartId(response.data.id);
         localStorage.setItem("cartId", response.data.id);
         setLoading(false);
         return response.data;
@@ -115,12 +119,17 @@ const useCart = () => {
   );
 
   useEffect(() => {
-    if (!cart) getOrCreateCart();
-  }, [getOrCreateCart, cart]);
+    if (!cart && cartId) {
+      getOrCreateCart();
+    } else if (!cart && !cartId) {
+      getOrCreateCart();
+    }
+  }, [getOrCreateCart, cart, cartId]);
 
   return {
     cart,
     loading,
+    cartId,
     getOrCreateCart,
     addCartItem,
     updateCartItemQuantity,
