@@ -16,7 +16,7 @@ const ProductItem = ({ product }) => {
         <h3 className="font-bold text-xl text-amber-300">${product.price}</h3>
         <p>{product.description}</p>
         <div className="card-actions mt-1">
-          <Link to={`/shop/${product.id}`} className="btn btn-primary">
+          <Link to={`/menu/${product.id}`} className="btn btn-primary">
             Order Now
           </Link>
         </div>

@@ -20,8 +20,8 @@ const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="shop/:productId" element={<ProductDetail />} />
+        <Route path="menu" element={<Shop />} />
+        <Route path="menu/:productId" element={<ProductDetail />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />

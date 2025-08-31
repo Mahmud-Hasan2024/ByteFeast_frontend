@@ -26,7 +26,7 @@ const ProductDetail = () => {
     <div className="w-3/4 mx-auto px-4 py-8">
       <div className="mb-6">
         <Link
-          to="/shop"
+          to="/menu"
           className="flex items-center text-sm text-base-content/70 hover:text-base-content transition-colors"
         >
           <FaArrowLeft className="mr-2 h-4 w-4" />

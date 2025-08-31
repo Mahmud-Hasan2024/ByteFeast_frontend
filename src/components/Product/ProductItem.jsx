@@ -3,7 +3,7 @@ import defaultImage from "../../assets/images/default_product.png";
 
 const ProductItem = ({ product }) => {
   return (
-    <Link to={`/shop/${product.id}`}>
+    <Link to={`/menu/${product.id}`}>
       <div className="card bg-base-100 w-96 shadow-sm">
         <figure className="px-10 pt-10">
           <img
