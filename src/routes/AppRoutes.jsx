@@ -13,6 +13,8 @@ import Profile from "../pages/Profile";
 import ProductDetail from "../pages/ProductDetail";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
+import PaymentSuccess from "../pages/PaymentSuccess";
+import AddFoodItem from "../pages/AddFoodItem";
 
 const AppRoutes = () => {
   return (
@@ -40,6 +42,8 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="cart" element={<Cart />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="payment/success/" element={<PaymentSuccess />} />
+        <Route path="menu/add" element={<AddFoodItem />} />
       </Route>
     </Routes>
   );

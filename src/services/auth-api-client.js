@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authApiClient = axios.create({
-  baseURL: "https://bytefeast-resturant-django-rest-api.vercel.app/api/v1",
+  baseURL: "https://byte-feast-resturant-django-rest-ap.vercel.app/api/v1",
 });
 
 export default authApiClient;

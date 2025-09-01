@@ -1,6 +1,6 @@
 import OrderItems from "./OrderItems";
 
-const OrderTable = ({ items }) => {
+const OrderTable = ({ items = [] }) => {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-700">
       <table className="table-auto w-full border-collapse">
@@ -21,5 +21,6 @@ const OrderTable = ({ items }) => {
     </div>
   );
 };
+
 
 export default OrderTable;

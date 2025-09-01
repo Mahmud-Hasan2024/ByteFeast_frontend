@@ -6,6 +6,7 @@ import { useState } from "react";
 const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
   const { user } = useAuthContext();
   const [isUpdating, setIsUpdating] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleStatusChange = async (event) => {
     const newStatus = event.target.value;
@@ -14,10 +15,34 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
     setIsUpdating(false);
   };
 
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+      const response = await authApiClient.post("/payment/initiate/", {
+        amount: order.total_price,
+        orderId: order.id,
+        numItems: order.items?.length,
+      });
+
+      if (response.data.payment_url) {
+        setLoading(false);
+        window.location.href = response.data.payment_url;
+      } else {
+        alert("Payment failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
+      case "Not Paid":
+        return "bg-yellow-500 text-black";
       case "Pending":
         return "bg-gray-500 text-white";
+      case "Ready to Ship":
+        return "bg-purple-500 text-white";
       case "Shipped":
         return "bg-blue-500 text-white";
       case "Delivered":
@@ -25,7 +50,7 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
       case "Canceled":
         return "bg-red-500 text-white";
       default:
-        return "bg-gray-400";
+        return "bg-gray-400 text-white";
     }
   };
 
@@ -44,17 +69,23 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
             <select
               value={order.status}
               onChange={handleStatusChange}
-              className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)} disabled:opacity-50 transition-colors`}
+              className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                order.status
+              )} disabled:opacity-50 transition-colors`}
               disabled={isUpdating}
             >
+              <option value="Not Paid">Not Paid</option>
               <option value="Pending">Pending</option>
+              <option value="Ready to Ship">Ready to Ship</option>
               <option value="Shipped">Shipped</option>
               <option value="Delivered">Delivered</option>
               <option value="Canceled">Canceled</option>
             </select>
           ) : (
             <span
-              className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}
+              className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                order.status
+              )}`}
             >
               {order.status}
             </span>
@@ -81,7 +112,7 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
         <div className="space-y-2 w-full max-w-xs text-gray-300">
           <div className="flex justify-between">
             <span>Subtotal:</span>
-            <span>${order.total_price.toFixed(2)}</span>
+            <span>${(order.total_price ?? 0).toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span>Shipping:</span>
@@ -89,12 +120,16 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
           </div>
           <div className="flex justify-between font-bold border-t border-gray-600 pt-2 text-gray-50 text-lg">
             <span>Total:</span>
-            <span>${order.total_price.toFixed(2)}</span>
+            <span>${(order.total_price ?? 0).toFixed(2)}</span>
           </div>
         </div>
-        {!user.is_staff && order.status === "Pending" && (
-          <button className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-            Pay Now
+        {!user.is_staff && order.status === "Not Paid" && (
+          <button
+            className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            onClick={handlePayment}
+            disabled={loading}
+          >
+            {loading ? "Processing..." : "Pay Now"}
           </button>
         )}
       </div>
