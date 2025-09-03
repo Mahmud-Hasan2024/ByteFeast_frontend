@@ -136,8 +136,13 @@ const Register = () => {
                 type="text"
                 placeholder="7/A Dhanmondi, Dhaka"
                 className="input input-bordered w-full"
-                {...register("address")}
+                {...register("address", { required: "Address is required" })}
               />
+              {errors.address && (
+                <span className="label-text-alt text-error">
+                  {errors.address.message}
+                </span>
+              )}
             </div>
 
             {/* Phone number */}
@@ -150,8 +155,15 @@ const Register = () => {
                 type="text"
                 placeholder="0123456789"
                 className="input input-bordered w-full"
-                {...register("phone_number")}
+                {...register("phone_number", {
+                  required: "Phone number is required",
+                })}
               />
+              {errors.phone_number && (
+                <span className="label-text-alt text-error">
+                  {errors.phone_number.message}
+                </span>
+              )}
             </div>
 
             {/* Password */}
