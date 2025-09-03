@@ -1,5 +1,10 @@
 import { GiChefToque } from "react-icons/gi";
-import { AiOutlineTwitter, AiOutlineYoutube, AiOutlineFacebook } from "react-icons/ai";
+import {
+  AiOutlineTwitter,
+  AiOutlineYoutube,
+  AiOutlineFacebook,
+} from "react-icons/ai";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
@@ -17,15 +22,15 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="flex gap-4">
-          <a href="#" className="text-amber-400 hover:text-amber-200">
+          <Link to="#" className="text-amber-400 hover:text-amber-200">
             <AiOutlineTwitter size={24} />
-          </a>
-          <a href="#" className="text-amber-400 hover:text-amber-200">
+          </Link>
+          <Link to="#" className="text-amber-400 hover:text-amber-200">
             <AiOutlineYoutube size={24} />
-          </a>
-          <a href="#" className="text-amber-400 hover:text-amber-200">
+          </Link>
+          <Link to="#" className="text-amber-400 hover:text-amber-200">
             <AiOutlineFacebook size={24} />
-          </a>
+          </Link>
         </div>
 
         {/* Copyright */}

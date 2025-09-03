@@ -1,7 +1,12 @@
 import Features from "../components/features";
 import Hero from "../components/Hero";
 import Category from "../components/Home/Categories/Category";
+import MonthlyDiscount from "../components/Home/MonthlyDiscount";
+import DiscountedProducts from "../components/Home/Products/DiscountedProducts";
+import MostLikedFoods from "../components/Home/Products/MostLikedFoods";
 import Product from "../components/Home/Products/Product";
+import SpecialProducts from "../components/Home/Products/SpecialProducts";
+import Testimonials from "../components/Home/Testimonials";
 
 const Home = () => {
   return (
@@ -10,6 +15,11 @@ const Home = () => {
       <Features />
       <Category />
       <Product />
+      <MostLikedFoods />
+      <SpecialProducts />
+      <DiscountedProducts />
+      <MonthlyDiscount />
+      <Testimonials />
     </div>
   );
 };

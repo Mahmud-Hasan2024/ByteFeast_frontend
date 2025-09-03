@@ -49,6 +49,9 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
             <Link to="/">Home</Link>
           </li>
           <li>
@@ -129,9 +132,6 @@ const Navbar = () => {
                   <NavLink to="/dashboard/profile">
                     Profile <span className="badge">New</span>
                   </NavLink>
-                </li>
-                <li>
-                  <a>Settings</a>
                 </li>
                 <li>
                   <a onClick={logoutUser}>Logout</a>

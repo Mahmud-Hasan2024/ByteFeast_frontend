@@ -2,12 +2,16 @@ import { useState } from "react";
 import { FaCheck, FaShoppingCart } from "react-icons/fa";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import useCartContext from "../../hooks/useCartContext";
+import useAuthContext from "../../hooks/useAuthContext";
+import { useNavigate } from "react-router";
 
 const AddToCartButton = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const { addCartItem } = useCartContext();
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
@@ -23,6 +27,12 @@ const AddToCartButton = ({ product }) => {
   };
 
   const addToCart = async () => {
+    if (!user) {
+      alert("Please login or register to add items to your cart.");
+      navigate("/login");
+      return;
+    }
+
     setIsAdding(true);
     try {
       await addCartItem(product.id, quantity);

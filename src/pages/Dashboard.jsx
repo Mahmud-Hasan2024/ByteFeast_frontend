@@ -77,7 +77,7 @@ const Dashboard = () => {
       {/* Trending Foods Section */}
       <h2 className="text-2xl font-bold text-gray-50 mb-4">Trending Foods</h2>
       {stats.trending_foods && stats.trending_foods.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
           {stats.trending_foods.map((food) => (
             <div
               key={food.food_id}
@@ -93,7 +93,34 @@ const Dashboard = () => {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400">No trending foods found.</p>
+        <p className="text-gray-400 mb-8">No trending foods found.</p>
+      )}
+
+      {/* Mostly Liked Foods Section */}
+      <h2 className="text-2xl font-bold text-gray-50 mb-4">
+        Mostly Liked Foods
+      </h2>
+      {stats.mostly_liked_foods && stats.mostly_liked_foods.length > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {stats.mostly_liked_foods.map((food) => (
+            <div
+              key={food.food_id}
+              className="bg-gray-800 rounded-xl shadow-md p-4 flex flex-col justify-between"
+            >
+              <h3 className="text-lg font-bold text-gray-50">
+                {food.food__name}
+              </h3>
+              <p className="text-gray-400">
+                Average Rating: {food.avg_rating?.toFixed(1) ?? "N/A"}
+              </p>
+              <p className="text-gray-400">
+                Total Reviews: {food.total_reviews ?? 0}
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-400">No mostly liked foods found.</p>
       )}
     </div>
   );

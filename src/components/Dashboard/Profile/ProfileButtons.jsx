@@ -1,10 +1,10 @@
-import { Edit, Save, XCircle } from 'lucide-react'; // Icons for buttons
+import { Edit, Save, XCircle } from 'lucide-react';
 
 const ProfileButtons = ({ isEditing, setIsEditing, isSubmitting }) => {
   return (
-    <div className="flex justify-center pt-8"> {/* Increased padding */}
+    <div className="flex justify-center pt-8">
       {isEditing ? (
-        <div className="space-x-4 flex"> {/* Use flex to keep buttons together */}
+        <div className="space-x-4 flex">
           <button
             type="submit"
             className="btn btn-primary px-8 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"

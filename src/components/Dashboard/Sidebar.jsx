@@ -25,7 +25,7 @@ const Sidebar = () => {
     { to: "/categories", icon: FiTag, label: "Categories" },
     { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
     { to: "/dashboard/orders", icon: FiPackage, label: "Orders" },
-    { to: "/reviews", icon: FiStar, label: "Reviews" },
+    // { to: "/reviews", icon: FiStar, label: "Reviews" },
   ];
 
   const adminMenues = [
@@ -33,11 +33,11 @@ const Sidebar = () => {
     { to: "/menu", icon: FiBookOpen, label: "menu" },
     { to: "/dashboard/menu/add", icon: FiPlusCircle, label: "Add Foods" },
     { to: "/categories", icon: FiTag, label: "Categories" },
-    { to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
+    { to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Category" },
     { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
     { to: "/dashboard/orders", icon: FiPackage, label: "Orders" },
-    { to: "/reviews", icon: FiStar, label: "Reviews" },
-    { to: "/users", icon: FiUsers, label: "Users" },
+    // { to: "/reviews", icon: FiStar, label: "Reviews" },
+    // { to: "/users", icon: FiUsers, label: "Users" },
   ];
 
   const menuItems = user.is_staff ? adminMenues : customerMenus;

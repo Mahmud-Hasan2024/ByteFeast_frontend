@@ -26,13 +26,13 @@ const Product = () => {
     <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex justify-between items-center px-4 md:px-8 mb-7">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-content">Trending Products</h2>
-          <a
+          <h2 className="text-3xl md:text-4xl font-bold text-neutral-content">🔥 Trending Products</h2>
+          {/* <a
             href="#"
             className="btn btn-primary px-6 py-3 rounded-full text-lg"
           >
             View All
-          </a>
+          </a> */}
         </div>
         {/* Spinner */}
         {isLoading && (

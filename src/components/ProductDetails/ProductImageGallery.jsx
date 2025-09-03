@@ -11,11 +11,9 @@ const CLOUDINARY_BASE_URL = "https://res.cloudinary.com/dciz8qr49/";
 const ProductImageGallery = ({ images, ProductName }) => {
   const [thumbsSwiper] = useState(null);
 
-  // Use default image if none
+  // If no images are passed, use the local default image
   const displayImages =
-    images && images.length > 0
-      ? images
-      : [{ image: defaultImage }];
+    images && images.length > 0 ? images : [{ image: defaultImage }];
 
   return (
     <div className="rounded-lg border overflow-hidden">
@@ -27,21 +25,34 @@ const ProductImageGallery = ({ images, ProductName }) => {
         }}
         className="product-main-slider"
       >
-        {displayImages.map((imageObj, index) => (
-          <SwiperSlide key={index}>
-            <div className="aspect-square bg-base-100">
-              <img
-                src={
-                  imageObj.image.startsWith("http")
-                    ? imageObj.image
-                    : `${CLOUDINARY_BASE_URL}${imageObj.image}`
-                }
-                alt={ProductName}
-                className="h-full w-full object-contain"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {displayImages.map((imageObj, index) => {
+          const isLocal =
+            imageObj.image === defaultImage ||
+            imageObj.image.startsWith("/") ||
+            imageObj.image.startsWith("data:") ||
+            imageObj.image.startsWith("blob:");
+
+          const imageUrl = isLocal
+            ? imageObj.image 
+            : imageObj.image.startsWith("http")
+            ? imageObj.image
+            : `${CLOUDINARY_BASE_URL}${imageObj.image}`;
+
+          return (
+            <SwiperSlide key={index}>
+              <div className="aspect-square bg-base-100">
+                <img
+                  src={imageUrl}
+                  alt={ProductName}
+                  className="h-full w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = defaultImage;
+                  }}
+                />
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

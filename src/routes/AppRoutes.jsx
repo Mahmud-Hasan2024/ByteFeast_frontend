@@ -15,6 +15,10 @@ import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import AddFoodItem from "../pages/AddFoodItem";
+import EditFoodItem from "../pages/EditFoodItem";
+import CategoriesPage from "../pages/CategoriesPage";
+import EditCategory from "../pages/EditCategory";
+import AddCategory from "../pages/AddCategory";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="menu" element={<Shop />} />
+        <Route path="categories" element={<CategoriesPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
@@ -44,6 +49,9 @@ const AppRoutes = () => {
         <Route path="orders" element={<Orders />} />
         <Route path="payment/success/" element={<PaymentSuccess />} />
         <Route path="menu/add" element={<AddFoodItem />} />
+        <Route path="categories/add" element={<AddCategory />} />
+        <Route path="menu/:foodId/edit" element={<EditFoodItem />} />
+        <Route path="categories/:categoryId/edit" element={<EditCategory />} />
       </Route>
     </Routes>
   );
