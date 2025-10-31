@@ -26,7 +26,7 @@ const ProductItem = ({ product }) => {
       <div className="card-body items-center text-center">
         <h2 className="card-title">{product.name}</h2>
         <h3 className="font-bold text-xl text-amber-300">
-          ${product.effective_price ?? product.price}
+          ৳{product.effective_price ?? product.price}
         </h3>
         <p className="text-sm text-base-content/70">{product.description}</p>
         <div className="card-actions mt-1">

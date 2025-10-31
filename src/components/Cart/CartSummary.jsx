@@ -35,25 +35,25 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
         <div className="space-y-3">
           <div className="flex justify-between items-center text-lg">
             <span className="text-gray-600">Subtotal ({itemCount} items)</span>
-            <span className="font-medium">${totalPrice.toFixed(2)}</span>{" "}
+            <span className="font-medium">৳{totalPrice.toFixed(2)}</span>{" "}
           </div>
 
           <div className="flex justify-between items-center text-lg">
             <span className="text-gray-600">Shipping</span>{" "}
             <span className="font-medium">
-              {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+              {shipping === 0 ? "Free" : `৳${shipping.toFixed(2)}`}
             </span>
           </div>
 
           <div className="flex justify-between items-center text-lg">
             <span className="text-gray-600">Estimated Tax</span>
-            <span className="font-medium">${tax.toFixed(2)}</span>{" "}
+            <span className="font-medium">৳{tax.toFixed(2)}</span>{" "}
           </div>
 
           <div className="border-t border-gray-200 pt-4 mt-4">
             <div className="flex justify-between font-bold text-xl text-primary">
               <span>Order Total</span>
-              <span>${orderTotal.toFixed(2)}</span>
+              <span>৳{orderTotal.toFixed(2)}</span>
             </div>
           </div>
         </div>
