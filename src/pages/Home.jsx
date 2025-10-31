@@ -2,10 +2,10 @@ import Features from "../components/Features";
 import Hero from "../components/Hero";
 import Category from "../components/Home/Categories/Category";
 import MonthlyDiscount from "../components/Home/MonthlyDiscount";
-import DiscountedProducts from "../components/Home/Products/DiscountedProducts";
+import TopRatedFoods from "../components/Home/Products/TopRatedFoods";
 import MostLikedFoods from "../components/Home/Products/MostLikedFoods";
-import Product from "../components/Home/Products/Product";
-import SpecialProducts from "../components/Home/Products/SpecialProducts";
+import DiscountedFoods from "../components/Home/Products/DiscountedFoods";
+import SpecialFoods from "../components/Home/Products/SpecialFoods";
 import Testimonials from "../components/Home/Testimonials";
 
 const Home = () => {
@@ -14,10 +14,10 @@ const Home = () => {
       <Hero />
       <Features />
       <Category />
-      <Product />
+      <TopRatedFoods />
       <MostLikedFoods />
-      <SpecialProducts />
-      <DiscountedProducts />
+      <SpecialFoods />
+      <DiscountedFoods />
       <MonthlyDiscount />
       <Testimonials />
     </div>
