@@ -22,7 +22,7 @@ const Order = () => {
                   <div className="badge badge-success">Completed</div>
                 </td>
                 <td>Mar 8, 2025</td>
-                <td>৳125.00</td>
+                <td>$125.00</td>
               </tr>
               <tr>
                 <td>#ORD-7244</td>
@@ -31,7 +31,7 @@ const Order = () => {
                   <div className="badge badge-warning">Processing</div>
                 </td>
                 <td>Mar 7, 2025</td>
-                <td>৳89.99</td>
+                <td>$89.99</td>
               </tr>
               <tr>
                 <td>#ORD-7243</td>
@@ -40,7 +40,7 @@ const Order = () => {
                   <div className="badge badge-info">Shipped</div>
                 </td>
                 <td>Mar 7, 2025</td>
-                <td>৳245.50</td>
+                <td>$245.50</td>
               </tr>
               <tr>
                 <td>#ORD-7242</td>
@@ -49,7 +49,7 @@ const Order = () => {
                   <div className="badge badge-success">Completed</div>
                 </td>
                 <td>Mar 6, 2025</td>
-                <td>৳112.75</td>
+                <td>$112.75</td>
               </tr>
             </tbody>
           </table>

@@ -60,7 +60,7 @@ const Dashboard = () => {
         <StatCard
           icon={FiShoppingCart}
           title="Total Spent"
-          value={`৳${totalSpent.toFixed(2)}`}
+          value={`$${totalSpent.toFixed(2)}`}
         />
         <StatCard
           icon={FiStar}

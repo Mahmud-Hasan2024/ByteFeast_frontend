@@ -30,7 +30,7 @@ const CartItemList = ({ items, handleUpdateQuantity, handleRemoveItem }) => {
                 </h3>
 
                 <p className="text-sm text-gray-500">
-                  Unit Price: ৳{price.toFixed(2)}{" "}
+                  Unit Price: ${price.toFixed(2)}{" "}
                 </p>
               </div>
 
@@ -71,7 +71,7 @@ const CartItemList = ({ items, handleUpdateQuantity, handleRemoveItem }) => {
                 <span className="text-sm text-gray-500 block md:hidden">
                   Total:
                 </span>
-                <span className="text-lg">৳{total_price.toFixed(2)}</span>{" "}
+                <span className="text-lg">${total_price.toFixed(2)}</span>{" "}
               </div>
 
               <div className="flex-shrink-0 ml-4">

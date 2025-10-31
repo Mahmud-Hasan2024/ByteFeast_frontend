@@ -16,7 +16,7 @@ const ProductItem = ({ product }) => {
         </figure>
         <div className="card-body items-center text-center">
           <h2 className="card-title">{product.name}</h2>
-          <h3 className="font-bold text-xl text-red-700">৳{product.price}</h3>
+          <h3 className="font-bold text-xl text-red-700">${product.price}</h3>
           <p>{product.description}</p>
           <div className="card-actions mt-1">
             <button className="btn btn-primary">Order Now</button>

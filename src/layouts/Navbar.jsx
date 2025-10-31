@@ -102,7 +102,7 @@ const Navbar = () => {
                     {cart?.items?.length || 0} Items
                   </span>
                   <span className="text-info">
-                    Subtotal: ৳{cart?.total_price || 0}
+                    Subtotal: ${cart?.total_price || 0}
                   </span>
                   <div className="card-actions">
                     <Link to="/dashboard/cart">

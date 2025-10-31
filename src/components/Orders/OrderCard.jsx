@@ -112,15 +112,15 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
         <div className="space-y-2 w-full max-w-xs text-gray-300">
           <div className="flex justify-between">
             <span>Subtotal:</span>
-            <span>৳{(order.total_price ?? 0).toFixed(2)}</span>
+            <span>${(order.total_price ?? 0).toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span>Shipping:</span>
-            <span>৳0.00</span>
+            <span>$0.00</span>
           </div>
           <div className="flex justify-between font-bold border-t border-gray-600 pt-2 text-gray-50 text-lg">
             <span>Total:</span>
-            <span>৳{(order.total_price ?? 0).toFixed(2)}</span>
+            <span>${(order.total_price ?? 0).toFixed(2)}</span>
           </div>
         </div>
         {!user.is_staff && order.status === "Not Paid" && (

@@ -49,7 +49,7 @@ const FilterSection = ({
             />
             <span className="self-center text-neutral-content">-</span>
             <span className="self-center text-neutral-content">
-              ৳{priceRange[0]}
+              ${priceRange[0]}
             </span>
           </div>
         </div>
@@ -74,7 +74,7 @@ const FilterSection = ({
           />
           <div className="w-full flex justify-between text-xs px-2 mt-1">
             <span className="self-center text-neutral-content">
-              ৳{priceRange[1]}
+              ${priceRange[1]}
             </span>
             <span className="self-center text-neutral-content">-</span>
             <input
