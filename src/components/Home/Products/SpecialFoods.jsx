@@ -26,7 +26,7 @@ const SpecialFoods = () => {
     <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-neutral-content mb-7">
-          ✨ Special Products
+          ✨ Special Foods
         </h2>
 
         {loading && (
@@ -38,7 +38,7 @@ const SpecialFoods = () => {
         {error && <ErroAlert error={error} />}
 
         {!loading && !error && products.length === 0 && (
-          <p className="text-center text-gray-500 mt-6">No Special Products Available</p>
+          <p className="text-center text-gray-500 mt-6">No Special Foods Available</p>
         )}
 
         {!loading && !error && products.length > 0 && (
