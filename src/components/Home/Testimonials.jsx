@@ -6,17 +6,15 @@ const testimonials = [
     role: "Food Blogger",
     quote:
       "The best dining experience I’ve ever had in Dhaka. Every bite feels like love on a plate!",
-    image:
-      "https://randomuser.me/api/portraits/women/68.jpg",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
   },
   {
     id: 2,
-    name: "Rahim Uddin",
+    name: "Ahsan Shakib",
     role: "Regular Customer",
     quote:
       "Delicious food, cozy environment, and top-notch service. Highly recommended for everyone!",
-    image:
-      "https://randomuser.me/api/portraits/men/32.jpg",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: 3,
@@ -24,8 +22,7 @@ const testimonials = [
     role: "Entrepreneur",
     quote:
       "Their special deals are unbeatable. Always fresh, always tasty. I keep coming back!",
-    image:
-      "https://randomuser.me/api/portraits/women/12.jpg",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
 ];
 
@@ -50,9 +47,7 @@ const Testimonials = () => {
                   className="w-20 h-20 rounded-full mb-4 border-2 border-primary object-cover"
                 />
                 <p className="italic text-base-content/80 mb-4">"{t.quote}"</p>
-                <h3 className="font-semibold text-lg text-primary">
-                  {t.name}
-                </h3>
+                <h3 className="font-semibold text-lg text-primary">{t.name}</h3>
                 <p className="text-sm text-base-content/60">{t.role}</p>
               </div>
             </div>
