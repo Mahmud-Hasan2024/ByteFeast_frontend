@@ -3,7 +3,6 @@ import ReviewForm from "./ReviewForm";
 import authApiClient from "../../services/auth-api-client";
 import { useEffect, useState } from "react";
 import ReviewList from "./ReviewList";
-import apiClient from "../../services/api-client";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const ReviewSection = () => {
