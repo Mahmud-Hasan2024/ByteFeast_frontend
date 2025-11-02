@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import useFetchCategories from "../hooks/useFetchCategories";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../components/Products/ProductItem";
 import apiClient from "../services/api-client";
 
 const CategoryPage = () => {
-  const categories = useFetchCategories();
+  const categories = useFetchCategories(); // your existing hook
   const [categoriesWithProducts, setCategoriesWithProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
