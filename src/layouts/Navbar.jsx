@@ -177,7 +177,7 @@ const Navbar = () => {
               <>
                 <div className="flex items-center gap-3 px-6 py-2">
                   <img
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    src="https://www.gravatar.com/avatar/?d=mp&f=y"
                     alt="User"
                     className="w-8 h-8 rounded-full border"
                   />
