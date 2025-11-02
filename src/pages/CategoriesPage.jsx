@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useFetchCategories from "../hooks/useFetchCategories";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../components/Home/Products/ProductItem";
 import apiClient from "../services/api-client";
 
 const CategoryPage = () => {
