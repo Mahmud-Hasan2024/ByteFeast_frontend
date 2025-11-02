@@ -5,22 +5,22 @@ import apiClient from "../services/api-client";
 
 const CategoryPage = () => {
   const categories = useFetchCategories();
-  const [categoriesWithProducts, setCategoriesWithProducts] = useState([]);
+  const [categoriesWithFoods, setCategoriesWithFoods] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProductsForCategories = async () => {
+    const fetchFoodsForCategories = async () => {
       try {
         setLoading(true);
 
         const data = await Promise.all(
           categories.map(async (cat) => {
-            const res = await apiClient.get(`/products/?category_id=${cat.id}`);
-            return { ...cat, products: res.data.results };
+            const res = await apiClient.get(`/foods/?category_id=${cat.id}`);
+            return { ...cat, foods: res.data.results };
           })
         );
 
-        setCategoriesWithProducts(data);
+        setCategoriesWithFoods(data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -29,7 +29,7 @@ const CategoryPage = () => {
     };
 
     if (categories.length > 0) {
-      fetchProductsForCategories();
+      fetchFoodsForCategories();
     }
   }, [categories]);
 
@@ -47,18 +47,18 @@ const CategoryPage = () => {
         🍽️ Food Categories
       </h1>
 
-      {categoriesWithProducts.map((category) => (
+      {categoriesWithFoods.map((category) => (
         <div key={category.id} className="mb-16">
           {/* Category Header */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-primary">{category.name}</h2>
           </div>
 
-          {/* Products under this category */}
-          {category.products.length > 0 ? (
+          {/* Foods under this category */}
+          {category.foods.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.products.map((product) => (
-                <ProductItem key={product.id} product={product} />
+              {category.foods.map((food) => (
+                <ProductItem key={food.id} product={food} />
               ))}
             </div>
           ) : (
