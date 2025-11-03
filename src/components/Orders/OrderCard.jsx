@@ -25,13 +25,18 @@ const OrderCard = ({ order, onCancel, onStatusUpdate }) => {
       });
 
       if (response.data.payment_url) {
-        setLoading(false);
-        window.location.href = response.data.payment_url;
+        // Wait one short tick so React can render "Processing..."
+        setTimeout(() => {
+          window.location.href = response.data.payment_url;
+        }, 100);
       } else {
         alert("Payment failed");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Payment initiation failed:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
