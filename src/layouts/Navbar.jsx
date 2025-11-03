@@ -22,7 +22,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
           <ul className="flex gap-5 font-medium">
-            {user?.is_staff && (
+            {user?.is_active && (
               <li>
                 <Link to="/dashboard" className="hover:text-amber-500">
                   Dashboard
@@ -132,7 +132,7 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden bg-base-200 shadow-inner">
           <ul className="flex flex-col gap-1 py-3">
-            {user?.is_staff && (
+            {user?.is_active && (
               <li>
                 <Link
                   to="/dashboard"
