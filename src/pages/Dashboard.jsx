@@ -75,7 +75,7 @@ const Dashboard = () => {
       </div>
 
       {/* Trending Foods Section */}
-      <h2 className="text-2xl font-bold text-gray-50 mb-4">Top 6 Trending Foods</h2>
+      <h2 className="text-2xl font-bold text-gray-50 mb-4">🔥 Trending Foods</h2>
       {stats.trending_foods && stats.trending_foods.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
           {stats.trending_foods.map((food) => (
@@ -98,7 +98,7 @@ const Dashboard = () => {
 
       {/* Mostly Liked Foods Section */}
       <h2 className="text-2xl font-bold text-gray-50 mb-4">
-        Top 6 Most Liked Foods
+        ⭐ Top Rated By Customers
       </h2>
       {stats.mostly_liked_foods && stats.mostly_liked_foods.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
