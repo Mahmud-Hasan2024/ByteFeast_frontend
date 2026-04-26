@@ -18,7 +18,7 @@ const Category = () => {
           {/* Optional CTA */}
           <Link
             to="/categories"
-            className="ibtn btn-primary rounded-full px-5 py-2 min-h-0 h-auto font-semibold normal-case transition-all border-none mb-8"
+            className="btn btn-primary rounded-full px-5 py-2 min-h-0 h-auto font-semibold normal-case transition-all border-none"
           >
             View All
           </Link>
