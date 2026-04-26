@@ -25,9 +25,17 @@ const DiscountedProducts = () => {
   return (
     <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-neutral-content mb-7">
-          🏷️ Discounted Foods
-        </h2>
+        <div className="flex justify-between items-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-neutral-content mb-7">
+            🏷️ Discounted Foods
+          </h2>
+          <Link
+            to="/menu"
+            className="btn btn-primary rounded-full px-5 py-2 min-h-0 h-auto font-semibold normal-case transition-all border-none mb-7"
+          >
+            See All Foods
+          </Link>
+        </div>
 
         {loading && (
           <div className="flex justify-center items-center py-10">

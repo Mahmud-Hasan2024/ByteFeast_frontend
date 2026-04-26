@@ -14,9 +14,13 @@ const Category = () => {
         {/* Category Heading  */}
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Browse Categories</h2>
-          {/* <a href="#" className="btn btn-primary rounded-full">
+          {/* Optional CTA */}
+          <Link
+            to="/categories"
+            className="ibtn btn-primary rounded-full px-5 py-2 min-h-0 h-auto font-semibold normal-case transition-all border-none mb-8"
+          >
             View All
-          </a> */}
+          </Link>
         </div>
 
         {/* Category Grid  */}
