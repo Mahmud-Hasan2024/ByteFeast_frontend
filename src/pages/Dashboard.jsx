@@ -17,7 +17,8 @@ const Dashboard = () => {
         const res = await authApiClient.get("/analytics/dashboard");
         setStats(res.data);
       } catch (err) {
-        setError("Failed to load dashboard statistics.");
+        setError("Failed to load dashboard data. Please try again later.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -31,29 +32,34 @@ const Dashboard = () => {
     </div>
   );
 
-  if (error) return <div className="alert alert-error max-w-lg mx-auto mt-10">{error}</div>;
+  if (error) return (
+    <div className="container mx-auto p-4">
+      <div className="alert alert-error shadow-lg text-white font-bold">{error}</div>
+    </div>
+  );
 
-  // Helper to map Django's "food__" fields to what ProductItem.jsx expects
+  // Maps backend keys to the format ProductItem.jsx needs
   const mapFoodData = (food) => ({
     id: food.food_id,
     name: food.food__name,
     price: food.food__price,
     description: food.food__description,
-    images: food.food__images__image ? [{ image: food.food__images__image }] : []
+    // backend now sends 'image_url' directly
+    images: food.image_url ? [{ image: food.image_url }] : []
   });
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-gray-900 min-h-screen">
       <header className="mb-10">
         <h1 className="text-3xl font-extrabold text-white">Dashboard</h1>
-        <p className="text-gray-400">Welcome back, {user.email}</p>
+        <p className="text-gray-400">Activity for {user.email}</p>
       </header>
 
-      {/* Stats Summary */}
+      {/* Stats Summary Section */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
         <StatCard 
           icon={FiPackage} 
-          title="Orders" 
+          title="Total Orders" 
           value={user.is_staff ? stats.total_orders_overall : stats.total_orders} 
         />
         <StatCard 
@@ -67,24 +73,24 @@ const Dashboard = () => {
 
       {/* Trending Section */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-gray-50 mb-6 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-primary pl-4">
           🔥 Trending Foods
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {stats.trending_foods.map((food) => (
+          {stats.trending_foods?.map((food) => (
             <ProductItem key={`trend-${food.food_id}`} product={mapFoodData(food)} />
           ))}
         </div>
       </section>
 
       {/* Most Liked Section */}
-      <section>
-        <h2 className="text-2xl font-bold text-gray-50 mb-6 flex items-center gap-2">
-          ⭐ Top Rated By Customers
+      <section className="pb-10">
+        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-secondary pl-4">
+          ⭐ Top Rated By Community
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {stats.mostly_liked_foods.map((food) => (
-            <ProductItem key={`like-${food.food_id}`} product={mapFoodData(food)} />
+          {stats.mostly_liked_foods?.map((food) => (
+            <ProductItem key={`liked-${food.food_id}`} product={mapFoodData(food)} />
           ))}
         </div>
       </section>
