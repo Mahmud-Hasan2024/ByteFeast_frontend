@@ -17,7 +17,7 @@ const Dashboard = () => {
         const res = await authApiClient.get("/analytics/dashboard");
         setStats(res.data);
       } catch (err) {
-        setError("Failed to load dashboard data. Please try again later.");
+        setError("Failed to load dashboard data.");
         console.error(err);
       } finally {
         setLoading(false);
@@ -38,13 +38,12 @@ const Dashboard = () => {
     </div>
   );
 
-  // Maps backend keys to the format ProductItem.jsx needs
+  // Updated to match the clean keys from the new backend helper
   const mapFoodData = (food) => ({
-    id: food.food_id,
-    name: food.food__name,
-    price: food.food__price,
-    description: food.food__description,
-    // backend now sends 'image_url' directly
+    id: food.id,
+    name: food.name,
+    effective_price: food.price, // Component uses this for the yellow price tag
+    description: food.description,
     images: food.image_url ? [{ image: food.image_url }] : []
   });
 
@@ -55,7 +54,7 @@ const Dashboard = () => {
         <p className="text-gray-400">Activity for {user.email}</p>
       </header>
 
-      {/* Stats Summary Section */}
+      {/* Stats Summary */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
         <StatCard 
           icon={FiPackage} 
@@ -78,7 +77,7 @@ const Dashboard = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stats.trending_foods?.map((food) => (
-            <ProductItem key={`trend-${food.food_id}`} product={mapFoodData(food)} />
+            <ProductItem key={`trend-${food.id}`} product={mapFoodData(food)} />
           ))}
         </div>
       </section>
@@ -90,7 +89,7 @@ const Dashboard = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stats.mostly_liked_foods?.map((food) => (
-            <ProductItem key={`liked-${food.food_id}`} product={mapFoodData(food)} />
+            <ProductItem key={`liked-${food.id}`} product={mapFoodData(food)} />
           ))}
         </div>
       </section>
