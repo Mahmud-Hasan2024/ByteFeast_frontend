@@ -30,9 +30,9 @@ const Sidebar = () => {
 
   const adminMenues = [
     { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-    { to: "/menu", icon: FiBookOpen, label: "menu" },
+    { to: "/dashboard/menu", icon: FiBookOpen, label: "menu" },
     { to: "/dashboard/menu/add", icon: FiPlusCircle, label: "Add Foods" },
-    { to: "/categories", icon: FiTag, label: "Categories" },
+    { to: "/dashboard/categories", icon: FiTag, label: "Categories" },
     { to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Category" },
     { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
     { to: "/dashboard/orders", icon: FiPackage, label: "Orders" },
