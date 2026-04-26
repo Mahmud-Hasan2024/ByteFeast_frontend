@@ -18,15 +18,12 @@ const EditCategory = () => {
         setFetchingData(true);
         const res = await authApiClient.get(`/categories/${categoryId}/`);
         
-        // SAFETY CHECK:
-        // If your backend returns an array [ {name: 'wwe'} ], we take index 0.
-        // If it returns an object {name: 'wwe'}, we take res.data.name.
+        // Pre-filling logic: Handles both object and array responses
         if (Array.isArray(res.data)) {
             setName(res.data[0]?.name || "");
         } else {
             setName(res.data.name || "");
         }
-
       } catch (err) {
         console.error("Error fetching category:", err);
       } finally {
@@ -39,7 +36,6 @@ const EditCategory = () => {
     }
   }, [categoryId, user]);
 
-  // If we are still fetching, show a spinner so the user doesn't see a blank box
   if (loadingAuth || fetchingData) {
     return (
       <div className="flex justify-center items-center py-20 h-64">
@@ -47,6 +43,10 @@ const EditCategory = () => {
         <p className="ml-4 text-gray-400">Loading current name...</p>
       </div>
     );
+  }
+
+  if (!user?.is_staff) {
+    return <p className="text-red-500 text-center mt-10 font-bold">Access Denied: Admins Only.</p>;
   }
 
   const handleUpdate = async (e) => {
@@ -57,9 +57,22 @@ const EditCategory = () => {
       alert("Category updated successfully!");
       navigate("/categories");
     } catch (err) {
+      console.error(err);
       alert("Failed to update category.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this category? This will delete all products under it!")) return;
+    try {
+      await authApiClient.delete(`/categories/${categoryId}/`);
+      alert("Category deleted successfully!");
+      navigate("/categories");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete category.");
     }
   };
 
@@ -84,10 +97,15 @@ const EditCategory = () => {
           />
         </div>
         
-        <div className="flex gap-4">
-          <button type="submit" className="btn btn-primary flex-1" disabled={loading}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button type="submit" className="btn btn-primary" disabled={loading}>
             {loading ? "Updating..." : "Save Changes"}
           </button>
+          
+          <button type="button" className="btn btn-error" onClick={handleDelete}>
+            Delete Category
+          </button>
+
           <button 
             type="button" 
             className="btn btn-ghost" 
