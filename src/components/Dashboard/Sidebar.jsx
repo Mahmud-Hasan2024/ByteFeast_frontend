@@ -81,7 +81,7 @@ const Sidebar = () => {
             <li>
               <Link 
                 to="/" 
-                className="flex items-center gap-3 text-primary hover:bg-primary hover:text-primary-content transition-all duration-200"
+                className="flex items-center justify-center gap-3 text-primary hover:bg-primary hover:text-primary-content transition-all duration-200"
               >
                 <FiHome className="h-5 w-5" />
                 <span className="font-bold">Return to Home</span>
