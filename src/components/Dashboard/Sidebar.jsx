@@ -77,7 +77,7 @@ const Sidebar = () => {
 
         {/* NEW: Return to Home Action */}
         <div className="mt-auto border-t border-base-300 pt-4">
-          <ul className="menu menu-md p-0">
+          <ul className="p-0">
             <li>
               <Link 
                 to="/" 
