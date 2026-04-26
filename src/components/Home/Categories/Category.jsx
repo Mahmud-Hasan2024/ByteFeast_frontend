@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import apiClient from "../../../services/api-client";
 import CategoryItems from "./CategoryItems";
 
