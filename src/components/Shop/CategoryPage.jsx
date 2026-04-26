@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router"; 
 import useFetchCategories from "../hooks/useFetchCategories";
-import ProductItem from "../components/Products/ProductItem";
+import ProductItem from "../components/Home/Products/ProductItem";
 import apiClient from "../services/api-client";
+import useAuthContext from "../hooks/useAuthContext";
 
 const CategoryPage = () => {
-  const categories = useFetchCategories(); // your existing hook
-  const [categoriesWithProducts, setCategoriesWithProducts] = useState([]);
+  const { user } = useAuthContext(); // Get user status
+  const categories = useFetchCategories();
+  const [categoriesWithFoods, setCategoriesWithFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProductsForCategories = async () => {
@@ -47,24 +51,36 @@ const CategoryPage = () => {
         🍽️ Food Categories
       </h1>
 
-      {categoriesWithProducts.map((category) => (
-        <div key={category.id} className="mb-16">
+      {categoriesWithFoods.map((category) => (
+        <div 
+          key={category.id} 
+          id={`category-${category.id}`} 
+          className="mb-16 scroll-mt-24"
+        >
           {/* Category Header */}
-          <div className="mb-6">
+          <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-primary">{category.name}</h2>
+            
+            {/* Admin Edit Button */}
+            {user?.is_staff && (
+              <Link 
+                to={`/dashboard/categories/${category.id}/edit`} 
+                className="btn btn-primary btn-sm rounded-lg"
+              >
+                Edit Category
+              </Link>
+            )}
           </div>
 
-          {/* Products under this category */}
-          {category.products.length > 0 ? (
+          {/* Foods grid logic stays the same */}
+          {category.foods.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.products.map((product) => (
-                <ProductItem key={product.id} product={product} />
+              {category.foods.map((food) => (
+                <ProductItem key={food.id} product={food} />
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 font-medium">
-              No products available in this category.
-            </p>
+            <p className="text-gray-500 font-medium">No products available in this category.</p>
           )}
         </div>
       ))}
