@@ -3,96 +3,125 @@ import { FiPackage, FiShoppingCart, FiStar, FiUsers } from "react-icons/fi";
 import authApiClient from "../services/auth-api-client";
 import StatCard from "../components/Dashboard/StatCard";
 import useAuthContext from "../hooks/useAuthContext";
-import ProductItem from "../components/Home/Products/ProductItem";
 
 const Dashboard = () => {
   const { user } = useAuthContext();
   const [stats, setStats] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchDashboard = async () => {
+    try {
+      // Fetch shared analytics
+      const analyticsRes = await authApiClient.get("/analytics/dashboard");
+      setStats(analyticsRes.data);
+
+      // Fetch user's orders
+      const ordersRes = await authApiClient.get("/orders/");
+      setOrders(ordersRes.data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load dashboard.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        const res = await authApiClient.get("/analytics/dashboard");
-        setStats(res.data);
-      } catch (err) {
-        setError("Failed to load dashboard data.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
     if (user) fetchDashboard();
   }, [user]);
 
-  if (loading) return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
-      <span className="loading loading-spinner loading-lg text-primary"></span>
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-900">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
-  if (error) return (
-    <div className="container mx-auto p-4">
-      <div className="alert alert-error shadow-lg text-white font-bold">{error}</div>
-    </div>
-  );
+  if (error) {
+    return <div className="text-center text-red-500 mt-8">{error}</div>;
+  }
 
-  // Updated to match the clean keys from the new backend helper
-  const mapFoodData = (food) => ({
-    id: food.id,
-    name: food.name,
-    effective_price: food.price, // Component uses this for the yellow price tag
-    description: food.description,
-    images: food.image_url ? [{ image: food.image_url }] : []
-  });
+  // Personalized total orders for user, overall total for admin
+  const totalOrders = user.is_staff ? stats.total_orders || 0 : orders.length;
+
+  // Total spent for user
+  const totalSpent = orders.reduce((sum, o) => sum + (o.total_price ?? 0), 0);
 
   return (
-    <div className="container mx-auto py-8 px-4 bg-gray-900 min-h-screen">
-      <header className="mb-10">
-        <h1 className="text-3xl font-extrabold text-white">Dashboard</h1>
-        <p className="text-gray-400">Activity for {user.email}</p>
-      </header>
+    <div className="container mx-auto py-8 px-4">
+      <h2 className="text-2xl font-bold text-gray-50 mb-6">Dashboard</h2>
 
-      {/* Stats Summary */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
-        <StatCard 
-          icon={FiPackage} 
-          title="Total Orders" 
-          value={user.is_staff ? stats.total_orders_overall : stats.total_orders} 
+      {/* Stats Cards */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <StatCard icon={FiPackage} title="Total Orders" value={totalOrders} />
+        <StatCard
+          icon={FiShoppingCart}
+          title="Total Spent"
+          value={`$${totalSpent.toFixed(2)}`}
         />
-        <StatCard 
-          icon={FiShoppingCart} 
-          title="Total Spent" 
-          value={`$${stats.total_spent.toFixed(2)}`} 
+        <StatCard
+          icon={FiStar}
+          title="Mostly Liked Foods"
+          value={stats.mostly_liked_foods?.length || 0}
         />
-        <StatCard icon={FiStar} title="Mostly Liked" value={stats.mostly_liked_foods?.length || 0} />
-        <StatCard icon={FiUsers} title="Trending Items" value={stats.trending_foods?.length || 0} />
+        <StatCard
+          icon={FiUsers}
+          title="Trending Foods"
+          value={stats.trending_foods?.length || 0}
+        />
       </div>
 
-      {/* Trending Section */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-primary pl-4">
-          🔥 Trending Foods
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {stats.trending_foods?.map((food) => (
-            <ProductItem key={`trend-${food.id}`} product={mapFoodData(food)} />
+      {/* Trending Foods Section */}
+      <h2 className="text-2xl font-bold text-gray-50 mb-4">Top 6 Trending Foods</h2>
+      {stats.trending_foods && stats.trending_foods.length > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
+          {stats.trending_foods.map((food) => (
+            <div
+              key={food.food_id}
+              className="bg-gray-800 rounded-xl shadow-md p-4 flex flex-col justify-between"
+            >
+              <h3 className="text-lg font-bold text-gray-50">
+                {food.food__name}
+              </h3>
+              <p className="text-gray-400">
+                Total Orders: {food.total_quantity}
+              </p>
+            </div>
           ))}
         </div>
-      </section>
+      ) : (
+        <p className="text-gray-400 mb-8">No trending foods found.</p>
+      )}
 
-      {/* Most Liked Section */}
-      <section className="pb-10">
-        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-secondary pl-4">
-          ⭐ Top Rated By Community
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {stats.mostly_liked_foods?.map((food) => (
-            <ProductItem key={`liked-${food.id}`} product={mapFoodData(food)} />
+      {/* Mostly Liked Foods Section */}
+      <h2 className="text-2xl font-bold text-gray-50 mb-4">
+        Top 6 Most Liked Foods
+      </h2>
+      {stats.mostly_liked_foods && stats.mostly_liked_foods.length > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {stats.mostly_liked_foods.map((food) => (
+            <div
+              key={food.food_id}
+              className="bg-gray-800 rounded-xl shadow-md p-4 flex flex-col justify-between"
+            >
+              <h3 className="text-lg font-bold text-gray-50">
+                {food.food__name}
+              </h3>
+              <p className="text-gray-400">
+                Average Rating: {food.avg_rating?.toFixed(1) ?? "N/A"}
+              </p>
+              <p className="text-gray-400">
+                Total Reviews: {food.total_reviews ?? 0}
+              </p>
+            </div>
           ))}
         </div>
-      </section>
+      ) : (
+        <p className="text-gray-400">No mostly liked foods found.</p>
+      )}
     </div>
   );
 };
