@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router"; 
 import useFetchCategories from "../hooks/useFetchCategories";
 import ProductItem from "../components/Home/Products/ProductItem";
 import apiClient from "../services/api-client";
@@ -7,19 +8,18 @@ const CategoryPage = () => {
   const categories = useFetchCategories();
   const [categoriesWithFoods, setCategoriesWithFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchFoodsForCategories = async () => {
       try {
         setLoading(true);
-
         const data = await Promise.all(
           categories.map(async (cat) => {
             const res = await apiClient.get(`/foods/?category_id=${cat.id}`);
             return { ...cat, foods: res.data.results };
           })
         );
-
         setCategoriesWithFoods(data);
       } catch (err) {
         console.error(err);
@@ -32,6 +32,17 @@ const CategoryPage = () => {
       fetchFoodsForCategories();
     }
   }, [categories]);
+
+  // Auto-scroll logic: waits for loading to be false and looks for a hash in URL
+  useEffect(() => {
+    if (!loading && location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [loading, location.hash]);
 
   if (loading) {
     return (
@@ -48,7 +59,12 @@ const CategoryPage = () => {
       </h1>
 
       {categoriesWithFoods.map((category) => (
-        <div key={category.id} className="mb-16">
+        /* Added id for target and scroll-mt to prevent navbar overlap */
+        <div 
+          key={category.id} 
+          id={`category-${category.id}`} 
+          className="mb-16 scroll-mt-24"
+        >
           {/* Category Header */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-primary">{category.name}</h2>
