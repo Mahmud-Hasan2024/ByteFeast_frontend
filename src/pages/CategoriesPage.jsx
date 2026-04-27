@@ -55,9 +55,10 @@ const CategoryPage = () => {
 
   return (
     <div className="w-full bg-gray-900 min-h-screen overflow-x-hidden">
+      
       <div className="max-w-7xl mx-auto px-4 py-16">
         
-        <h1 className="text-4xl md:text-5xl font-black text-center mb-16 text-primary tracking-tight">
+        <h1 className="text-4xl font-extrabold text-center mb-12 text-primary">
           🍽️ Food Categories
         </h1>
 
@@ -65,14 +66,11 @@ const CategoryPage = () => {
           <div 
             key={category.id} 
             id={`category-${category.id}`} 
-            className="mb-20 scroll-mt-24"
+            className="mb-16 scroll-mt-24"
           >
-            {/* ENHANCED HEADER SECTION */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b-2 border-gray-800 pb-6 gap-4">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-                <span className="text-primary mr-2">#</span>
-                {category.name}
-              </h2>
+            {/* Category Header with Admin Edit Button */}
+            <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+              <h2 className="text-3xl font-bold text-primary">{category.name}</h2>
               
               {user?.is_staff && (
                 <Link 
@@ -84,15 +82,15 @@ const CategoryPage = () => {
               )}
             </div>
 
-            {/* Foods Grid */}
+            {/* Foods under this category */}
             {category.foods && category.foods.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.foods.map((food) => (
                   <ProductItem key={food.id} product={food} />
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 font-medium italic text-lg">
+              <p className="text-gray-500 font-medium">
                 No products available in this category.
               </p>
             )}
