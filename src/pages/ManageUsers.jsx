@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import authApiClient from "../../services/auth-api-client";
-import useAuthContext from "../../hooks/useAuthContext";
 import { FiMail, FiUser, FiShield } from "react-icons/fi";
+// 🎯 Broken the circle by using the base apiClient and correct path depth
+import apiClient from "../services/api-client"; 
+import useAuthContext from "../hooks/useAuthContext";
 
 const ManageUsers = () => {
   const { authTokens, user } = useAuthContext();
@@ -10,8 +11,11 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 🛡️ ByteFeast uses is_staff for admin checks
-    if (!authTokens?.access || !user?.is_staff) {
+    // 1. Guard: Wait for context to provide user data
+    if (!user) return;
+
+    // 2. Guard: ByteFeast uses is_staff for admin checks
+    if (!user.is_staff) {
       setError("Access denied. Staff privileges required.");
       setLoading(false);
       return;
@@ -20,7 +24,8 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const res = await authApiClient.get("/auth/users/?no_pagination=true");
+        // 🎯 Using the standard apiClient to avoid circular hooks
+        const res = await apiClient.get("/auth/users/?no_pagination=true");
         const data = res.data.results || res.data;
         setUsers(data);
         setError(null);
@@ -32,8 +37,11 @@ const ManageUsers = () => {
       }
     };
 
-    fetchUsers();
-  }, [authTokens, user]);
+    // Only fetch if we have an access token
+    if (authTokens?.access) {
+      fetchUsers();
+    }
+  }, [authTokens?.access, user]);
 
   if (loading) {
     return (
@@ -43,7 +51,19 @@ const ManageUsers = () => {
     );
   }
 
-  if (error) return <div className="p-6 text-center text-red-500 font-bold bg-gray-900 h-screen">{error}</div>;
+  if (error) {
+    return (
+      <div className="flex flex-col justify-center items-center p-6 text-center bg-gray-900 h-screen">
+        <p className="text-red-500 font-bold text-xl mb-4">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="btn btn-primary btn-sm"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-gray-900 min-h-screen p-6">
@@ -53,19 +73,22 @@ const ManageUsers = () => {
         </h2>
 
         <div className="overflow-x-auto bg-gray-800 rounded-2xl shadow-2xl border border-gray-700">
-          <table className="table table-zebra w-full">
+          <table className="table table-zebra w-full border-collapse">
             <thead>
-              <tr className="border-b border-gray-700">
-                <th className="text-center text-primary text-lg">ID</th>
-                <th className="text-center text-primary text-lg">Name</th>
-                <th className="text-center text-primary text-lg">Email</th>
-                <th className="text-center text-primary text-lg">Privilege</th>
-                <th className="text-center text-primary text-lg">Status</th>
+              <tr className="border-b border-gray-700 bg-gray-800/50">
+                <th className="text-center text-primary text-lg py-4">ID</th>
+                <th className="text-center text-primary text-lg py-4">Name</th>
+                <th className="text-center text-primary text-lg py-4">Email</th>
+                <th className="text-center text-primary text-lg py-4">Privilege</th>
+                <th className="text-center text-primary text-lg py-4">Status</th>
               </tr>
             </thead>
             <tbody className="text-gray-300">
               {users.map((u) => (
-                <tr key={u.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
+                <tr 
+                  key={u.id} 
+                  className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors"
+                >
                   <td className="text-center font-mono text-gray-500">{u.id}</td>
                   <td className="text-center font-semibold">
                     {u.first_name || u.last_name 
@@ -91,10 +114,9 @@ const ManageUsers = () => {
                   </td>
                   <td className="text-center">
                     <div className="flex items-center justify-center gap-1">
-                      {/* Check for is_active which is standard in Django */}
                       {u.is_active !== false ? (
                         <span className="text-emerald-400 flex items-center gap-2 font-medium">
-                          <span className="h-2 w-2 rounded-full bg-emerald-500"></span> Active
+                          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Active
                         </span>
                       ) : (
                         <span className="text-red-400 flex items-center gap-2 font-medium">
