@@ -10,10 +10,8 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 1. Wait for context to initialize
     if (!user) return;
 
-    // 2. Privilege check
     if (!user.is_staff) {
       setError("Access denied. Staff privileges required.");
       setLoading(false);
@@ -23,8 +21,6 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        // 🎯 We MUST manually pass the header because apiClient 
-        // doesn't have an interceptor for authTokens yet.
         const res = await apiClient.get("/auth/users/?no_pagination=true", {
           headers: {
             Authorization: `JWT ${authTokens?.access}`,
@@ -32,11 +28,14 @@ const ManageUsers = () => {
         });
         
         const data = res.data.results || res.data;
-        setUsers(data);
+        
+        // 🎯 Sorting logic: Ascending order by ID
+        const sortedUsers = [...data].sort((a, b) => a.id - b.id);
+        
+        setUsers(sortedUsers);
         setError(null);
       } catch (err) {
         console.error("Failed to fetch users:", err);
-        // Better error logging to see exactly why it fails
         const msg = err.response?.data?.detail || "Failed to load users.";
         setError(msg);
       } finally {
