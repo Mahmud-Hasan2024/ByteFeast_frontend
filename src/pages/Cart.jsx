@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import CartItemList from "../components/Cart/CartItemList";
 import CartSummary from "../components/Cart/CartSummary";
 import useCartContext from "../hooks/useCartContext";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FiShoppingCart } from "react-icons/fa";
 
 const Cart = () => {
   const { cart, cartId, loading, updateCartItemQuantity, deleteCartItems } =
