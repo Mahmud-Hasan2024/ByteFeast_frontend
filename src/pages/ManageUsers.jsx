@@ -28,8 +28,6 @@ const ManageUsers = () => {
         });
         
         const data = res.data.results || res.data;
-        
-        // 🎯 Sorting logic: Ascending order by ID
         const sortedUsers = [...data].sort((a, b) => a.id - b.id);
         
         setUsers(sortedUsers);
@@ -77,46 +75,48 @@ const ManageUsers = () => {
         <div className="overflow-x-auto bg-gray-800 rounded-2xl shadow-2xl border border-gray-700">
           <table className="table table-zebra w-full border-collapse">
             <thead>
-              <tr className="border-b border-gray-700 bg-gray-800/50">
-                <th className="text-center text-primary text-lg py-4">ID</th>
-                <th className="text-center text-primary text-lg py-4">Name</th>
-                <th className="text-center text-primary text-lg py-4">Email</th>
-                <th className="text-center text-primary text-lg py-4">Privilege</th>
-                <th className="text-center text-primary text-lg py-4">Status</th>
+              <tr className="border-b border-gray-700 bg-gray-800/80">
+                <th className="text-center text-primary text-lg py-5">ID</th>
+                <th className="text-center text-primary text-lg py-5">Name</th>
+                <th className="text-center text-primary text-lg py-5">Email</th>
+                <th className="text-center text-primary text-lg py-5">Privilege</th>
+                <th className="text-center text-primary text-lg py-5">Status</th>
               </tr>
             </thead>
             <tbody className="text-gray-300">
               {users.map((u) => (
-                <tr key={u.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
-                  <td className="text-center font-mono text-gray-500">{u.id}</td>
-                  <td className="text-center font-semibold">
+                <tr key={u.id} className="border-b border-gray-700/50 hover:bg-gray-700/40 transition-colors">
+                  <td className="text-center font-mono text-gray-500 py-4">{u.id}</td>
+                  <td className="text-center font-semibold py-4">
                     {u.first_name || u.last_name ? `${u.first_name} ${u.last_name}` : "Anonymous Eater"}
                   </td>
-                  <td className="text-center">
+                  <td className="text-center py-4">
                     <div className="flex items-center justify-center gap-2">
                       <FiMail className="text-primary/60" />
                       {u.email}
                     </div>
                   </td>
-                  <td className="text-center">
+                  <td className="text-center py-4">
                     {u.is_staff ? (
-                      <span className="badge badge-primary gap-1 font-bold py-3 px-4">
+                      /* 🎯 Added bg-primary-content and border for high visibility */
+                      <span className="badge bg-primary text-primary-content border-primary-focus gap-1 font-bold py-4 px-5 shadow-md">
                         <FiShield size={14} /> Admin
                       </span>
                     ) : (
-                      <span className="badge badge-ghost gap-1 py-3 px-4 text-gray-400">
+                      /* 🎯 Added bg-slate-700 to ensure it doesn't blend with zebra stripes */
+                      <span className="badge bg-slate-700 text-slate-200 border-slate-600 gap-1 font-medium py-4 px-5 shadow-sm">
                         <FiUser size={14} /> Customer
                       </span>
                     )}
                   </td>
-                  <td className="text-center">
+                  <td className="text-center py-4">
                     <div className="flex items-center justify-center gap-1">
                       {u.is_active !== false ? (
-                        <span className="text-emerald-400 flex items-center gap-2 font-medium">
+                        <span className="text-emerald-400 flex items-center gap-2 font-medium bg-emerald-900/20 px-3 py-1 rounded-full border border-emerald-500/30">
                           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Active
                         </span>
                       ) : (
-                        <span className="text-red-400 flex items-center gap-2 font-medium">
+                        <span className="text-red-400 flex items-center gap-2 font-medium bg-red-900/20 px-3 py-1 rounded-full border border-red-500/30">
                           <span className="h-2 w-2 rounded-full bg-red-500"></span> Inactive
                         </span>
                       )}
