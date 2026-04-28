@@ -8,7 +8,6 @@ import {
   FiUsers,
   FiBookOpen,
   FiHome,
-  FiUsers,
 } from "react-icons/fi";
 import { GiChefToque } from "react-icons/gi";
 import { Link } from "react-router";
