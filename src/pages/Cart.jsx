@@ -51,10 +51,17 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-          <p className="text-gray-500 text-lg">Your cart is empty.</p>
+        <div className="bg-gray-800 p-12 rounded-2xl shadow-2xl border border-gray-700 text-center">
+          {/* Added a subtle icon for better UX */}
+          <div className="mb-4 flex justify-center">
+            <div className="p-4 bg-gray-700/50 rounded-full">
+              <FiShoppingCart className="h-12 w-12 text-gray-500" />
+            </div>
+          </div>
+          <p className="text-gray-400 text-xl font-medium">Your cart is empty.</p>
+          <p className="text-gray-500 mb-6 text-sm">Looks like you haven't added any delicious items yet!</p>
 
-          <Link to="/menu" className="btn btn-primary mt-4">
+          <Link to="/menu" className="btn btn-primary px-8 hover:scale-105 transition-transform">
             Continue Ordering
           </Link>
         </div>
