@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { FiMail, FiUser, FiShield } from "react-icons/fi";
-// 🎯 Broken the circle by using the base apiClient and correct path depth
 import apiClient from "../services/api-client"; 
 import useAuthContext from "../hooks/useAuthContext";
 
@@ -11,10 +10,10 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 1. Guard: Wait for context to provide user data
+    // 1. Wait for context to initialize
     if (!user) return;
 
-    // 2. Guard: ByteFeast uses is_staff for admin checks
+    // 2. Privilege check
     if (!user.is_staff) {
       setError("Access denied. Staff privileges required.");
       setLoading(false);
@@ -24,20 +23,27 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        // 🎯 Using the standard apiClient to avoid circular hooks
-        const res = await apiClient.get("/auth/users/?no_pagination=true");
+        // 🎯 We MUST manually pass the header because apiClient 
+        // doesn't have an interceptor for authTokens yet.
+        const res = await apiClient.get("/auth/users/?no_pagination=true", {
+          headers: {
+            Authorization: `JWT ${authTokens?.access}`,
+          },
+        });
+        
         const data = res.data.results || res.data;
         setUsers(data);
         setError(null);
       } catch (err) {
         console.error("Failed to fetch users:", err);
-        setError("Failed to load users. Check if the API is running.");
+        // Better error logging to see exactly why it fails
+        const msg = err.response?.data?.detail || "Failed to load users.";
+        setError(msg);
       } finally {
         setLoading(false);
       }
     };
 
-    // Only fetch if we have an access token
     if (authTokens?.access) {
       fetchUsers();
     }
@@ -55,10 +61,7 @@ const ManageUsers = () => {
     return (
       <div className="flex flex-col justify-center items-center p-6 text-center bg-gray-900 h-screen">
         <p className="text-red-500 font-bold text-xl mb-4">{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
-          className="btn btn-primary btn-sm"
-        >
+        <button onClick={() => window.location.reload()} className="btn btn-primary btn-sm">
           Retry
         </button>
       </div>
@@ -85,15 +88,10 @@ const ManageUsers = () => {
             </thead>
             <tbody className="text-gray-300">
               {users.map((u) => (
-                <tr 
-                  key={u.id} 
-                  className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors"
-                >
+                <tr key={u.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
                   <td className="text-center font-mono text-gray-500">{u.id}</td>
                   <td className="text-center font-semibold">
-                    {u.first_name || u.last_name 
-                      ? `${u.first_name || ''} ${u.last_name || ''}` 
-                      : "Anonymous Eater"}
+                    {u.first_name || u.last_name ? `${u.first_name} ${u.last_name}` : "Anonymous Eater"}
                   </td>
                   <td className="text-center">
                     <div className="flex items-center justify-center gap-2">
