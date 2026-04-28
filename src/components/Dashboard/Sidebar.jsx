@@ -7,7 +7,8 @@ import {
   FiTag,
   FiUsers,
   FiBookOpen,
-  FiHome, // Added Home Icon
+  FiHome,
+  FiUsers,
 } from "react-icons/fi";
 import { GiChefToque } from "react-icons/gi";
 import { Link } from "react-router";
@@ -35,6 +36,7 @@ const Sidebar = () => {
     { to: "/dashboard/menu/add", icon: FiPlusCircle, label: "Add Foods" },
     { to: "/dashboard/categories", icon: FiTag, label: "Categories" },
     { to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Category" },
+    { to: "/dashboard/users", icon: FiUsers, label: "Manage Users" },
     { to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
     { to: "/dashboard/orders", icon: FiPackage, label: "Orders" },
     // { to: "/reviews", icon: FiStar, label: "Reviews" },

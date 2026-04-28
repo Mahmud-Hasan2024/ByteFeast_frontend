@@ -19,6 +19,7 @@ import EditFoodItem from "../pages/EditFoodItem";
 import CategoriesPage from "../pages/CategoriesPage";
 import EditCategory from "../pages/EditCategory";
 import AddCategory from "../pages/AddCategory";
+import ManageUsers from "../pages/ManageUsers";
 
 const AppRoutes = () => {
   return (
@@ -54,6 +55,7 @@ const AppRoutes = () => {
         <Route path="categories/add" element={<AddCategory />} />
         <Route path="menu/:foodId/edit" element={<EditFoodItem />} />
         <Route path="categories/:categoryId/edit" element={<EditCategory />} />
+        <Route path="users" element={<ManageUsers />} />
       </Route>
     </Routes>
   );
